@@ -2,12 +2,12 @@ package com.example.bookMyShow.Controllers;
 
 import com.example.bookMyShow.RequestDto.TheaterEntryDto;
 import com.example.bookMyShow.RequestDto.TheaterSeatsEntryDto;
+import com.example.bookMyShow.ResponseDto.MovieTimeDto;
 import com.example.bookMyShow.Services.TheaterServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/theater")
@@ -27,6 +27,11 @@ public class TheaterController {
 
         return theaterServices.addTheaterSeats(entryDto);
 
+    }
+
+    @GetMapping("/movie_time")
+    public List<MovieTimeDto> getMovieTiming(@RequestParam int theaterId){
+        return theaterServices.getMovieTiming(theaterId);
     }
 
 }

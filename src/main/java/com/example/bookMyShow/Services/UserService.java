@@ -1,7 +1,12 @@
 package com.example.bookMyShow.Services;
 
 import com.example.bookMyShow.Exception.NoUserFoundException;
+import com.example.bookMyShow.Models.Show;
+import com.example.bookMyShow.Models.ShowSeat;
+import com.example.bookMyShow.Models.Ticket;
 import com.example.bookMyShow.Models.User;
+import com.example.bookMyShow.Repository.ShowRepository;
+import com.example.bookMyShow.Repository.TicketRepository;
 import com.example.bookMyShow.Repository.UserRepository;
 import com.example.bookMyShow.RequestDto.AddUserDto;
 import com.example.bookMyShow.ResponseDto.UserResponseDto;
@@ -9,7 +14,10 @@ import com.example.bookMyShow.Transformers.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -17,6 +25,11 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    TicketRepository ticketRepository;
+
+    @Autowired
+    ShowRepository showRepository;
     public String addUser(AddUserDto userDto){
 
         User user = UserTransformer.convertDtoToEntity(userDto);
@@ -58,4 +71,24 @@ public class UserService {
 
     }
 
+    public void cancelTicket(int ticketId) {
+        Optional<Ticket> ticket =ticketRepository.findById(ticketId);
+        String bookedSeats=ticket.get().getBookedSeats();
+        String [] seats=bookedSeats.split(", ");
+        ArrayList<String> seatsList = new ArrayList<String>(
+                Arrays.asList(seats));
+        Show show=ticket.get().getShow();
+        List<ShowSeat> showSeatList = show.getShowSeatList();
+
+        for(ShowSeat showSeat : showSeatList){
+
+            if(seatsList.contains(showSeat.getSeatNo())){
+                showSeat.setAvailable(true);
+            }
+        }
+        User user=ticket.get().getUser();
+        user.getTicketList().remove(ticket.get());
+        userRepository.save(user);
+        showRepository.save(show);
+    }
 }

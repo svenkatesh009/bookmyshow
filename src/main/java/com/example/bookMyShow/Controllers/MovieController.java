@@ -8,10 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/movie")
@@ -25,5 +22,16 @@ public class MovieController {
         return movieService.addMovie(movieEntryDto);
     }
 
+
+    @GetMapping("/totalCollection")
+    public int getTotalCollection(@RequestParam int movieId){
+        return movieService.getTotalCollection(movieId);
+
+    }
+
+    @GetMapping("/maximumShows")
+    public String getMaximumShowMovie(){
+        return  movieService.getMovieWithMaximumShow();
+    }
 
 }

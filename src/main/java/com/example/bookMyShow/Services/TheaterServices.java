@@ -1,16 +1,20 @@
 package com.example.bookMyShow.Services;
 
 import com.example.bookMyShow.Enums.SeatType;
+import com.example.bookMyShow.Models.Show;
 import com.example.bookMyShow.Models.Theater;
 import com.example.bookMyShow.Models.TheaterSeat;
 import com.example.bookMyShow.Repository.TheaterRepository;
 import com.example.bookMyShow.RequestDto.TheaterEntryDto;
 import com.example.bookMyShow.RequestDto.TheaterSeatsEntryDto;
+import com.example.bookMyShow.ResponseDto.MovieTimeDto;
 import com.example.bookMyShow.Transformers.TheaterTransformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TheaterServices {
@@ -101,5 +105,17 @@ public class TheaterServices {
         theaterRepository.save(theater);
 
         return "Theater Seats have been successfully added";
+    }
+
+    public List<MovieTimeDto> getMovieTiming(int theaterId) {
+        Optional<Theater> theater=theaterRepository.findById(theaterId);
+        List<Show> showList=theater.get().getShowList();
+        List<MovieTimeDto> movieTimeDtoList=new ArrayList<>();
+        for (Show show:showList){
+            MovieTimeDto movieTimeDto=new MovieTimeDto();
+            movieTimeDto.setMovieName(show.getMovie().getMovieName());
+            movieTimeDto.setLocalTime(show.getTime());
+        }
+        return movieTimeDtoList;
     }
 }

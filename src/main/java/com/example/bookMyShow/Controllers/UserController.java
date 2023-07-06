@@ -5,12 +5,7 @@ import com.example.bookMyShow.RequestDto.AddUserDto;
 import com.example.bookMyShow.ResponseDto.UserResponseDto;
 import com.example.bookMyShow.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,6 +49,12 @@ public class UserController {
     @GetMapping("/findUsersGreaterThanAAge")
     public List<User> getAllUsers(@RequestParam("age")Integer age){
         return userService.getAllUserGreaterThan(age);
+    }
+
+    @DeleteMapping("/cancel ticket")
+    public String  cancelTicket(@RequestParam int ticketId){
+        userService.cancelTicket(ticketId);
+        return "Ticket has been cancelled";
     }
 
 }
