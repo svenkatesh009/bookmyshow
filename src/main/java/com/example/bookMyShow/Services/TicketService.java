@@ -100,7 +100,7 @@ public class TicketService {
                 "Enjoy the Show !!!";
 
         simpleMessageMail.setSubject("Ticket Confirmation Mail");
-        simpleMessageMail.setFrom("springacciojob@gmail.com");
+        simpleMessageMail.setFrom("projecttestingtesting333@gmail.com");
         simpleMessageMail.setText(body);
         simpleMessageMail.setTo(user.getEmail());
 
