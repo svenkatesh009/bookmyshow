@@ -10,5 +10,5 @@ public interface ShowRepository extends JpaRepository<Show,Integer> {
 
 
     @Query(value = "select movie_id from shows group by movie_id order by count(*) desc limit 1;",nativeQuery = true)
-    public Integer getMostShowedMovie(Date checkDate);
+    public Integer getMostShowedMovie();
 }

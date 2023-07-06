@@ -39,9 +39,9 @@ public class ShowController {
     }
 
     @GetMapping("/most-recommended-movie-name")
-    public String getMovieName(AddShowDto addShowDto){
+    public String getMovieName(){
 
-        return showService.getMovieName(addShowDto);
+        return showService.getMovieName();
     }
 
 

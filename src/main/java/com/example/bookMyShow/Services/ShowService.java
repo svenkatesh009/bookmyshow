@@ -113,9 +113,9 @@ public class ShowService {
 
     }
 
-    public String getMovieName(AddShowDto showDto){
+    public String getMovieName(){
 
-        Integer movieId = showRepository.getMostShowedMovie(showDto.getShowDate());
+        Integer movieId = showRepository.getMostShowedMovie();
 
         Movie movie = movieRepository.findById(movieId).get();
 
